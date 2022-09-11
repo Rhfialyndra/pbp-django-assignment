@@ -1,0 +1,24 @@
+.table-catalog {
+  margin-top : 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 90vw;
+}
+
+.table-catalog td, #table-catalog th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-catalog tr:nth-child(even){background-color: #f2f2f2;}
+
+.table-catalog tr:hover {background-color: #ddd;}
+
+.table-catalog th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left : 5px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
