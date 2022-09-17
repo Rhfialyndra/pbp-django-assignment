@@ -1,0 +1,113 @@
+[
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 1,
+        "fields": {
+            "title": "Morbin Time",
+            "release_date": "12-12-2012",
+            "description": "It's Morbin Time.",
+            "rating": 3,
+            "watched": false
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 2,
+        "fields": {
+            "title": "Kimi no Udin",
+            "release_date": "06-06-2016",
+            "description": "Niunggg..... JDUAR!!",
+            "rating": 5,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 3,
+        "fields": {
+            "title": "Satan's Slave 2",
+            "release_date": "03-08-2022",
+            "description": "Mid AF.",
+            "rating": 2,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 4,
+        "fields": {
+            "title": "LIL Y",
+            "release_date": "12-12-2012",
+            "description": "T_T",
+            "rating": 4,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 5,
+        "fields": {
+            "title": "Morbin Time 2",
+            "release_date": "12-12-2012",
+            "description": "It's Morbin Time, again.",
+            "rating": 3,
+            "watched": false
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 6,
+        "fields": {
+            "title": "BJORWI",
+            "release_date": "06-09-2022",
+            "description": "L+RATIO",
+            "rating": 1,
+            "watched": false
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 7,
+        "fields": {
+            "title": "Interstellar",
+            "release_date": "06-06-2016",
+            "description": "Stellarly incredible. a must watch.",
+            "rating": 5,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 8,
+        "fields": {
+            "title": "Puss in Boots",
+            "release_date": "01-03-2012",
+            "description": "elgato gelato",
+            "rating": 4,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 9,
+        "fields": {
+            "title": "LIL X",
+            "release_date": "12-12-2012",
+            "description": "down bad.",
+            "rating": 1,
+            "watched": true
+        }
+    },
+	{
+        "model": "mywatchlist.MyWatchList",
+        "pk": 10,
+        "fields": {
+            "title": "HIVschool",
+            "release_date": "12-12-2012",
+            "description": ":flushed: :blushed:",
+            "rating": 4,
+            "watched": false
+        }
+    }
+  
+]
