@@ -11,7 +11,12 @@
 
 
 1. **MVT Pada Django**<br>
+![MY MVT SCHEME](https://media.discordapp.net/attachments/854162996963311626/1019823246213910538/CamScanner_09-15-2022_11.12_1.jpg?width=669&height=498)
+<br>
+
 ![MVT Django](https://media.discordapp.net/attachments/854162996963311626/1019216889420992532/unknown.png)
+
+*taken from https://pythonguides.com/what-is-python-django/#django-architecture*
 
 django menggunakan paradigm Model-View-Template pada frameworknya. 
 `urls.py` bertugas untuk "mengatur" route/endpoint pada app kita. setiap request akan diteruskan ke `views.py` sesuai dengan pattern yang tertera pada `urls.py`.
