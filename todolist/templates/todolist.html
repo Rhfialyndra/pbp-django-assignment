@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h5>Halo, </h5>
+<p>{{nama}}!</p>
+<button style="padding : 10px;border-radius:10px;"><a href="{% url 'todolist:logout_user' %}">logout</a></button>
+
+{% if size %}
+
+	<table>
+		<tr>
+		<th>Time Created</th>
+		<th>Title</th>
+		<th>Description</th>
+		</tr>
+		{% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+		{% for todo in todo_list %}
+		<tr>
+			<th>{{todo.date}}</th>
+			<th>{{todo.title}}</th>
+			<th>{{todo.description}}</th>
+		</tr>
+		{% endfor %}
+	</table>
+{% else %}
+<p> Kamu belum punya todo list, yukk mulai buat!</p>
+{% endif %}
+<button style="padding : 10px;border-radius:10px;"><a href="{% url 'todolist:create_task' %}">Buat todo!</a></button>
+
+
+{% endblock content %}
