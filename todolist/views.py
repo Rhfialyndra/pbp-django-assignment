@@ -16,7 +16,7 @@ import datetime;
 @login_required(login_url="/todolist/login/")
 def show_todolist(request):
     context = {
-        'todo_list': Task.objects.all(),
+        'todo_list': Task.objects.filter(user=request.user),
         'size' : len(Task.objects.all()),
         'nama': request.user.username,
     }
