@@ -17,7 +17,7 @@ import datetime;
 def show_todolist(request):
     context = {
         'todo_list': Task.objects.filter(user=request.user),
-        'size' : len(Task.objects.all()),
+        'size' : len(Task.objects.filter(user=request.user)),
         'nama': request.user.username,
     }
     #request.COOKIES['last_login']
@@ -34,6 +34,20 @@ def create_task(request):
             obj.save()
             messages.success(request, "Berhasil membuat todo!")
     return render(request, "create-task.html", {"form" : form} )
+
+@login_required(login_url="/todolist/login/")
+def update_task(request, id):
+    query = Task.objects.get(pk=id, user=request.user);
+    if query is not None:
+        query.is_finished = not query.is_finished;
+        query.save();
+        print(id, query.is_finished)
+        return HttpResponseRedirect(reverse('todolist:show_todolist'))
+
+@login_required(login_url="/todolist/login/")
+def delete_task(request, id):
+    query = Task.objects.filter(pk=id, user=request.user).delete();
+    return HttpResponseRedirect(reverse('todolist:show_todolist'))
     
 def register(request):
     form = UserCreationForm()

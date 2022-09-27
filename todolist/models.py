@@ -9,3 +9,4 @@ class Task(models.Model):
     date = models.DateField(default=datetime.now());
     title = models.CharField(max_length=50);
     description = models.TextField(max_length=1000);
+    is_finished = models.BooleanField(default=False);

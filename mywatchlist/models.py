@@ -9,5 +9,5 @@ class MyWatchList(models.Model):
     release_date = models.CharField(max_length=10);
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)]);
     description = models.TextField(max_length=500);
-    watched = models.BooleanField(default=False)
+    watched = models.BooleanField(default=False);
     

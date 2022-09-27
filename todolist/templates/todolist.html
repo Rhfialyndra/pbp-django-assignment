@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h5>Halo, </h5>
-<p>{{nama}}!</p>
-<button style="padding : 10px;border-radius:10px;"><a href="{% url 'todolist:logout_user' %}">logout</a></button>
+<script src="https://cdn.tailwindcss.com"></script>
+<main class="max-w-screen min-h-screen flex justify-center">
+<div class="w-[60vw] relative mt-20">
+<h5 class="text-3xl">Halo, <span>{{nama}}</span> </h5>
+<button class="absolute right-0 top-0 border border-slate-700 px-2 py-1 rounded-md hover:bg-slate-700 hover:text-white transition-all duration-100"><a href="{% url 'todolist:logout_user' %}">logout</a></button>
 
 {% if size %}
 
-	<table>
+	<table class="w-full my-10">
 		<tr>
-		<th>Time Created</th>
-		<th>Title</th>
-		<th>Description</th>
+			<th class="p-2 bg-orange-400 rounded-tl-lg">Time Created</th>
+			<th class="p-2 bg-orange-400 ">Title</th>
+			<th class="p-2 bg-orange-400 ">Description</th>
+			<th class="p-2 bg-orange-400 rounded-tr-lg">Action</th>
 		</tr>
 		{% comment %} Tambahkan data di bawah baris ini {% endcomment %}
 		{% for todo in todo_list %}
 		<tr>
-			<th>{{todo.date}}</th>
-			<th>{{todo.title}}</th>
-			<th>{{todo.description}}</th>
+			<td class="text-center py-2">{{todo.date}}</td>
+			<td class="text-center py-2">{{todo.title}}</td>
+			<td class="text-center py-2">{{todo.description}}</td>
+			<td class="flex justify-around py-2">
+			{% if todo.is_finished %}
+				<a class="bg-green-500 hover:bg-green-600 text-white  rounded-full p-1 px-2" href="{% url 'todolist:update_task' todo.id %}">done already!</a>
+			{% else %}
+				<a class="underline hover:bg-green-500 hover:text-white hover:no-underline transition duration-100 rounded-full p-1 px-2"  href="{% url 'todolist:update_task' todo.id %}">Mark as done!</a>
+			{% endif %}
+			<a class="underline text-red-400 hover:text-red-500 font-bold" href="{% url 'todolist:delete_task' todo.id %}">Delete</a>
+			</td>
 		</tr>
 		{% endfor %}
 	</table>
 {% else %}
-<p> Kamu belum punya todo list, yukk mulai buat!</p>
+<p class="text-2xl text-slate-700 font-bold text-center my-20"> Kamu belum punya todo list, yukk mulai buat!</p>
 {% endif %}
-<button style="padding : 10px;border-radius:10px;"><a href="{% url 'todolist:create_task' %}">Buat todo!</a></button>
-
+<div class="w-full flex justify-center mt-10">
+	<a class="px-4 py-2 bg-orange-400 hover:bg-orange-500 rounded-md font-bold text-white" href="{% url 'todolist:create_task' %}">Buat todo!</a>
+</div>
+<button class="text-center"></button>
+</div>
+</main>
 
 {% endblock content %}
