@@ -195,7 +195,7 @@ CSRF (Cross Site Request Forgery) token adalah token yang digunakan sebagai "aut
 CSRF token bisa dikatan mirip sebagai api_key, dimana request harus memuat token yang sesuai dengan token yang  ter-record platform (server). dengan menerapkan CSRF token, platform server tidak akan menerima dan menjalankan request dari sembarang client. 
 Oleh karena itu, platform semakin aman dari serangan pihak luar, baik yang disengaja maupun tidak.
 Pada django, jika kita tidak memuat `{% csrf_token %}`, maka request POST yang kita kirim tidak memiliki token. 
-django akan mereturn http status code 403, yakni forbidden, karena menganggap request yang kita `malicious` (tidak bisa dipercaya).
+django akan mereturn http status code 403, yakni forbidden, karena menganggap request yang kita kirim `malicious` (tidak bisa dipercaya).
 
 
 2. Other ways to create forms beside  {{ form.as_table }}<br>
