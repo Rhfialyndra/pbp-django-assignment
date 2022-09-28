@@ -192,4 +192,85 @@ untuk form manapun, kita tetap harus menambahkan button dengan type dan value "s
 3. **How does formData get stored at the database?**<br>
 django form me-map input field HTML ke field/attribute pada model. untuk setiap instance `Form`, maka form tersebut sudah memiliki model yang terikat atau django akan membuat models dan record baru setiap form tersubmit.
 ketika user mengklik submit, maka django akan melakukan validasi terhadap form. jika valid, form akan dikonversi ke dalam object Model, lalu disimpan sebagai record Model baru ke database. 
-dengan begitu, data baru yang masuk tersebut bisa di fetch dan ditampilkan sebagai data di html. 
+dengan begitu, data baru yang masuk tersebut bisa di fetch dan ditampilkan sebagai data di html.
+ 4. **Implementasi**
+- buat app baru `todolist`
+- buat model baru pada `todolist`, yakni model Task dan sertakan user sebagai attribute dengan tipe foreign key dan `User` sebagai valuenya
+```python
+from todolist.models import *;
+from django.forms import *;
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task;
+        fields = ["title", "description"]
+```
+- buat function baru pada views yang mereturn html `todolist` dan `create-task`. tambahkan decorator `login_required` sehingga hanya user yang logged in yang bisa mengakses.
+```python
+@login_required(login_url="/todolist/login/")
+def show_todolist(request):
+    context = {
+        'todo_list': Task.objects.filter(user=request.user),
+        'size' : len(Task.objects.filter(user=request.user)),
+        'nama': request.user.username,
+    }
+    #request.COOKIES['last_login']
+    return render(request, "todolist.html", context)
+
+@login_required(login_url="/todolist/login/")
+def create_task(request):
+    form = TaskForm();
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = models.User.objects.get(pk=request.user.id)
+            obj.save()
+            messages.success(request, "Berhasil membuat todo!")
+    return render(request, "create-task.html", {"form" : form} )
+```
+context.todo_list merupakan array dari Task yang telah kita filter, di mana `Task.user == request.user`.
+lalu `create_task` akan menerima request POST dari user, memvalidasi form kemudian menyimpan ke dalam database.
+
+- definisikan routing pada `urls.py`
+```python
+# this is todolist/urls.py
+
+from django.urls import path
+from todolist.views import *;
+
+app_name = 'todolist'
+
+urlpatterns = [
+    path('', show_todolist, name="show_todolist"),
+    path('login/', login_user, name="login_user"),
+    path('register', register, name="register"),
+    path('logout/', logout_user, name='logout_user'),
+    path('create-task/', create_task, name='create_task'),
+    path('update_task/<int:id>', update_task, name='update_task'),
+    path('delete_task/<int:id>', delete_task, name='delete_task')
+]
+```
+
+```python
+# this is project_django/urls.py
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('example_app.urls')),
+    path('katalog/', include('katalog.urls')),
+    path('mywatchlist/', include('mywatchlist.urls')),
+    path('todolist/', include('todolist.urls'))
+]
+```
+
+- masukan `todolist` pada `INSTALLED_APPS` di settings.py
+- ubah value dari `release` pada Procfile menjadi : 
+```sh
+release: sh -c 'python manage.py makemigrations && python manage.py migrate && python manage.py loaddata initial_catalog_data.json && python manage.py loaddata initial_mywatchlist_data.json'
+
+```
+- push ke commit ke github, runner akan berjalan otomatis dan web akan terdeploy.
