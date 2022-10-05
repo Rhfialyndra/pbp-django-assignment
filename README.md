@@ -302,3 +302,150 @@ release: sh -c 'python manage.py makemigrations && python manage.py migrate && p
 
 ```
 - push ke commit ke github, runner akan berjalan otomatis dan web akan terdeploy.
+
+
+# 5<sup>th</sup> Assignment PBP
+---
+[Deployed Web](https://pbp-django-assignment.herokuapp.com/todolist/)
+---
+> Rahfi Alyendra G
+> 2106705764
+
+1. **inline vs internal vs external CSS**<br>
+- inline
+```html
+<button style="padding:20px;background-color:blue;border-radius:10px;">click me</button>
+```
+pros : Mudah dalam menganalisa styling (karena langsung tau element yang mana).
+cons : tidak enak dipandang, terlalu ruwet. memerlukan banyak penulisan code.
+
+- internal
+```html
+
+<head>
+	<style>
+	.classname {
+		font-weight : bold;
+		font-size : 100px;
+	}
+	</style>
+</head>
+
+<body>
+....
+</body>
+```
+pros : lebih enak dipandang dibandingkan inline. efisien karena reusable.
+cons : kalau banyak element dan selector, cukup bingung dalam men-trace reference dari setiap styling.
+
+- external
+```css
+// file berbeda dari html
+
+	.classname {
+		font-weight : bold;
+		font-size : 100px;
+	}
+```
+pros : separation of concern, yaitu "context" dari setiap file dipisahkan sesuai dengan fungsinya sehingga code lebih clean. efisien karena reusable.
+cons : kalau banyak element dan selector, cukup bingung dalam men-trace reference dari setiap styling. memperbanyak file pada project dir structure.
+
+Ya, bedanya adalah peletakan code css pada saat penggunaannya. Tak hanya itu, terdapat perbedaan pada tingkat prioritas, yakni
+    1. Inline style
+    2. External dan internal style sheets
+    3. Browser default
+
+2.**Tags HTML**<br>
+Ini Saya sudah bikin markdownya yang cukup comprehensive, saya sisipkan link saja ya https://github.com/Rhfialyndra/resource-sbf-2022/blob/master/Frontend/Basic%20Frontend%20Core.md
+
+3. **Tipe-tipe Selector CSS**
+  - Element Selector
+  ```css
+	h1 {
+	//css property:val; goes here
+	
+	}
+  ```
+  langsung mengselect/me-refer ke elmenet htmlnya.
+  
+  - Class Selector
+  ```css
+	.NAMA_CLASS {
+	//css property:val; goes here
+	
+	}
+  ```
+  merefer ke element html yang telah diberi attribute class dengan value `NAMA_CLASS` (non-unique).
+  
+  - id Selector
+  ```css
+	#NAMA_ID {
+	//css property:val; goes here
+	
+	}
+  ```
+  merefer ke element html yang telah diberi attribute id dengan value `NAMA_CLASS` (harus unique).
+  
+  Selain selector di atas, terdapat beberapa *combinators* yang bisa digunakan bersamaan dengan selector, yakni
+    - Descendant selector (space) --> `div p {} == Selects all <p> elements inside <div> elements`
+    - Child selector (>) --> `div > p {} ==	Selects all <p> elements where the parent is a <div> element`
+    - Adjacent sibling selector (+) --> `div + p {} ==	Selects the first <p> element that is placed immediately after <div> elements`
+    - General sibling selector (~) `p ~ ul 	Selects every <ul> element that is preceded by a <p> element`
+	
+4. **Implementation**<br>
+	- menggunakan tailwindcss, daisyUI dan VANTA.js.
+	
+	import *Content Delivery Network* (CDN) dari tailwindcss, daisyUI dan VANTA.json
+	
+	```html
+		<head>
+			<link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css" />
+			<script src="https://cdn.tailwindcss.com"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+		</head>
+	```
+	
+	- gunakan class component navbar dari daisyUI.
+	- gunakan class component card dari daisyUI untuk membuat card task todolist.
+	- terapkan styling sesuka hati
+	- buat tampilan menjadi responsive dengan media breakpoint tailwindcss.
+	- buat function untuk VANTA 3d wallpaper
+	```html
+	<head>
+		<script>
+            window.addEventListener("DOMContentLoaded", () => {
+
+                
+
+                VANTA.CLOUDS({
+                    el: "#VANTA-CLOUDS",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    skyColor: 0x4196c8,
+                    cloudShadowColor: 0x505664,
+                    sunColor: 0xbb8b4d,
+                    sunGlareColor: 0xeb7b53,
+                    sunlightColor: 0xb1804f,
+                    speed: 0.80,
+                    backgroundAlpha : 0.0
+                })
+
+            })
+        </script>
+	</head>
+	```
+	- terapkan selector untuk live wallpaper tsb
+	```html
+	<body id="VANTA">
+		.
+		.
+		.
+		.
+		<div id="VANTA-CLOUDS" class="-z-10 fixed top-0 w-screen min-h-screen"></div>
+	</body>
+	```
+	
