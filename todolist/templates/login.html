@@ -6,40 +6,43 @@
 
 {% block content %}
 
-<div class = "login">
+<main class="mt-32 w-full flex justify-center items-center text-gray-700">
+<div class = "login border border-slate-700 rounded-lg mx-4">
 
-    <h1>Login</h1>
+    <div class="flex items-center justify-center rounded-tl-lg rounded-tr-lg  text-slate-800 font-bold text-xl py-4 bg-gray-100">
+		<h5>Login</h5>
+	</div>
 
-    <form method="POST" action="">
+    <form method="POST" action="" class=" p-8 py-2 bg-white rounded-b-lg">
         {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
+        <section class="flex flex-col w-full justify-center">
+            <div class="flex flex-col">
+                <label>Username: </label>
+                <input class="mt-1 border p-2 border-slate-700 rounded-md" type="text" name="username" placeholder="Username" class="form-control">
+            </div>
                     
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
+            <div class="flex flex-col">
+                <label>Password:</label>
+                <input class="mt-1 border p-2 border-slate-700 rounded-md" type="password" name="password" placeholder="Password" class="form-control">
+            </div>          
+                <input class="btn mt-4 bg-gray-800" type="submit" value="Login"></td>
+        </section>
+		<div class="mt-10 w-full flex justify-center gap-x-1"> <p> Belum mempunyai akun? </p> <a class=" underline text-blue-700" href="{% url 'todolist:register' %}">Buat Akun</a> </div>
+		
+		{% if messages %}
+		<div class="px-2 md:px-8 py-2 bg-white rounded-br-lg rounded-bl-lg text-red-400 font-bold">
+			<ul>
+				{% for message in messages %}
+					<li>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}     
     </form>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
         
-    Belum mempunyai akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
 
 </div>
+</main>
 
 {% endblock content %}

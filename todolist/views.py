@@ -33,7 +33,7 @@ def create_task(request):
             obj.user = models.User.objects.get(pk=request.user.id)
             obj.save()
             messages.success(request, "Berhasil membuat todo!")
-    return render(request, "create-task.html", {"form" : form} )
+    return render(request, "create-task.html", {"form" : form, "nama" : request.user.username} )
 
 @login_required(login_url="/todolist/login/")
 def update_task(request, id):

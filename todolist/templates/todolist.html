@@ -3,41 +3,44 @@
 {% block content %}
 <script src="https://cdn.tailwindcss.com"></script>
 <main class="max-w-screen min-h-screen flex justify-center">
-<div class="w-[60vw] relative mt-20">
+<div class="w-[90vw] md:w-[60vw] relative mt-10">
 <h5 class="text-3xl">Halo, <span>{{nama}}</span> </h5>
-<button class="absolute right-0 top-0 border border-slate-700 px-2 py-1 rounded-md hover:bg-slate-700 hover:text-white transition-all duration-100"><a href="{% url 'todolist:logout_user' %}">logout</a></button>
 
 {% if size %}
-
-	<table class="w-full my-10">
-		<tr>
-			<th class="p-2 bg-orange-400 rounded-tl-lg">Time Created</th>
-			<th class="p-2 bg-orange-400 ">Title</th>
-			<th class="p-2 bg-orange-400 ">Description</th>
-			<th class="p-2 bg-orange-400 rounded-tr-lg">Action</th>
-		</tr>
-		{% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-		{% for todo in todo_list %}
-		<tr>
-			<td class="text-center py-2">{{todo.date}}</td>
-			<td class="text-center py-2">{{todo.title}}</td>
-			<td class="text-center py-2">{{todo.description}}</td>
-			<td class="flex justify-around py-2">
-			{% if todo.is_finished %}
-				<a class="bg-green-500 hover:bg-green-600 text-white  rounded-full p-1 px-2" href="{% url 'todolist:update_task' todo.id %}">done already!</a>
+	<div class="w-full my-4 flex flex-col items-center gap-y-4">
+	{% for todo in todo_list %}
+		<div class="card w-full lg:w-[500px] bg-base-100 shadow-xl">
+		  <div class="card-body p-4 md:p-6 relative">
+		  <label for={{todo.id}} class=" text-xl text-red-500 absolute right-2 top-2 md:right-5 md:top-4 px-3 py-1 hover:bg-gray-200 rounded-md transition duration-100 cursor-pointer">X</label>
+			<h2 class="card-title text-[18px] md:text-xl">{{todo.title}}</h2>
+			<p class="font-bold text-gray-600 text-[12px]">{{todo.date}}</p>
+			<p class='text-[13px] md:text-[15px]'>{{todo.description}}</p>
+			<div class="card-actions justify-end">
+			  {% if todo.is_finished %}
+				<a class="bg-green-500 hover:bg-green-600 text-white rounded-md px-2 py-1 md:py-2 text-[14px] md:text-[16px] " href="{% url 'todolist:update_task' todo.id %}">done already!</a>
 			{% else %}
-				<a class="underline hover:bg-green-500 hover:text-white hover:no-underline transition duration-100 rounded-full p-1 px-2"  href="{% url 'todolist:update_task' todo.id %}">Mark as done!</a>
+				<a class=" border border-slate-700 hover:bg-green-500 hover:text-white hover:no-underline transition duration-100 rounded-md p-2 px-2"  href="{% url 'todolist:update_task' todo.id %}">Mark as done!</a>
 			{% endif %}
-			<a class="underline text-red-400 hover:text-red-500 font-bold" href="{% url 'todolist:delete_task' todo.id %}">Delete</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+			</div>
+		  </div>
+		</div>
+		<input type="checkbox" id={{todo.id}} class="modal-toggle" />
+		<div class="modal modal-bottom sm:modal-middle">
+		  <div class="modal-box flex flex-col items-center">
+			<h3 class="font-bold text-lg">Deleted task can't be restored</h3>
+			<h2 class=" text-lg">Are you sure?</h2>
+			<div class="modal-action mt-10">
+			  <a href="{% url 'todolist:delete_task' todo.id %}" class="btn bg-red-500 text-white hover:bg-red-600">delete</a>
+			  <label for={{todo.id}} class="btn bg-white text-red-500">cancel</label>
+			</div>
+		  </div>
+		</div>
+	{% endfor %}
 {% else %}
 <p class="text-2xl text-slate-700 font-bold text-center my-20"> Kamu belum punya todo list, yukk mulai buat!</p>
 {% endif %}
 <div class="w-full flex justify-center mt-10">
-	<a class="px-4 py-2 bg-orange-400 hover:bg-orange-500 rounded-md font-bold text-white" href="{% url 'todolist:create_task' %}">Buat todo!</a>
+	<a class="px-4 py-2 rounded-md border border-gray-800 hover:bg-gray-200" href="{% url 'todolist:create_task' %}">Buat todo!</a>
 </div>
 <button class="text-center"></button>
 </div>
