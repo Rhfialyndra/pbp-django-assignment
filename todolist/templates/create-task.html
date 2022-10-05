@@ -7,14 +7,19 @@
 {% block content %}  
 
 <div class = "login w-full flex flex-col items-center mt-14">
-    <form method="POST"  class="flex flex-col items-center  mx-6 ">
+    <form method="POST"  class="flex flex-col items-center  mx-6">
 	
 	{% if messages %}  
-	<div class="w-full text-lg font-bold text-center my-2 text-gray-700">
+	<div class="w-full my-2 text-gray-700">
         <ul>   
             {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
+			<div class="alert alert-info shadow-lg py-2">
+			  <div>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+				<span>{{message}}</span>
+			  </div>
+			</div> 
+			{% endfor %}  
         </ul> 
 	</div>
     {% endif %}
@@ -29,7 +34,7 @@
         </div>
 		<div class="flex flex-col items-start gap-y-1 w-full">  
             <label for="id_description">Description</label>
-			<textarea class="textarea textarea-bordered h-[200px]" name="description" cols="40" rows="10" maxlength="1000" required="" id="id_description"></textarea>
+			<textarea class="textarea textarea-bordered w-full" name="description" cols="40" rows="10" maxlength="1000" required="" id="id_description"></textarea>
         </div>
 	
 	</div>
