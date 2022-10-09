@@ -11,12 +11,12 @@ from django.contrib.auth.decorators import login_required;
 from django.urls import reverse;
 from .forms import TaskForm;
 import datetime;
+import json;
 
 
 @login_required(login_url="/todolist/login/")
 def show_todolist(request):
     context = {
-        'todo_list': Task.objects.filter(user=request.user),
         'size' : len(Task.objects.filter(user=request.user)),
         'nama': request.user.username,
     }
@@ -35,6 +35,27 @@ def create_task(request):
             messages.success(request, "Berhasil membuat todo!")
     return render(request, "create-task.html", {"form" : form, "nama" : request.user.username} )
 
+
+@login_required(login_url="/todolist/login/")
+def create_task_json(request):
+    
+    if request.method == "POST":
+        obj = Task();
+        obj.user = request.user;
+        obj.title = request.POST.get("title")
+        obj.description = request.POST.get("description")
+        obj.save();
+        return HttpResponse(serializers.serialize("json", [obj]), content_type="application/json")
+    
+    return HttpResponse("only POST method allowed!");
+
+@login_required(login_url="/todolist/login/")        
+def get_all_task_json(request):
+    if request.method == "GET":
+        data = Task.objects.filter(user=request.user);
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json");
+    return HttpResponse("Only GET method allowed!");   
+
 @login_required(login_url="/todolist/login/")
 def update_task(request, id):
     query = Task.objects.get(pk=id, user=request.user);
@@ -47,7 +68,12 @@ def update_task(request, id):
 @login_required(login_url="/todolist/login/")
 def delete_task(request, id):
     query = Task.objects.filter(pk=id, user=request.user).delete();
-    return HttpResponseRedirect(reverse('todolist:show_todolist'))
+    return HttpResponse(reverse('todolist:show_todolist'))
+    
+@login_required(login_url="/todolist/login/")
+def delete_task_ajax(request, id):
+    query = Task.objects.filter(pk=id, user=request.user).delete();
+    return HttpResponse("Berhasil menghapus task!")
     
 def register(request):
     form = UserCreationForm()
