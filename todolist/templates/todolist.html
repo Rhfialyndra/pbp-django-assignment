@@ -6,12 +6,8 @@
 <div class="w-[90vw] md:w-[60vw] relative mt-10">
 <h5 class="text-3xl">Halo, <span>{{nama}}</span> </h5>
 
-{% if size %}
-	<div id="card-place" class="w-full my-4 flex flex-col items-center gap-y-4">
-	</div>
-{% else %}
-<p class="text-2xl text-slate-700 font-bold text-center my-20"> Kamu belum punya todo list, yukk mulai buat!</p>
-{% endif %}
+<div id="card-place" class="w-full my-4 flex flex-col items-center gap-y-4">
+</div>
 <div class="w-full flex justify-center mt-10">
 	<label for="create-task-modal" class="px-4 py-2 rounded-md border border-gray-800 hover:bg-gray-200 cursor-pointer">Buat todo!</label>
 </div>
@@ -27,7 +23,7 @@
 <div class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">
     <form id="form-create" method="POST" action="" class="flex flex-col items-center relative">
-	<label id="close-create-task-modal" for="create-task-modal" class=" text-gray-600 absolute -right-0 -top-2 text-3xl cursor-pointer hover:text-red-500 transition duration-100">x</label>
+	<label onclick="resetForm()" id="close-create-task-modal" for="create-task-modal" class=" text-gray-600 absolute -right-0 -top-2 text-3xl cursor-pointer hover:text-red-500 transition duration-100">x</label>
 	
 	{% if messages %}  
 	<div class="w-full my-2 text-gray-700">
@@ -69,11 +65,18 @@ function createCard(data){
 	const placeholder = $("#card-place");
 	placeholder.empty();
 	
+	
+	if(data != undefined && data.length > 0){
 	data.forEach(function(task) {
 		
 		appendCard(task);
 	
 	});
+	}else{
+		placeholder.append(
+		`<p id="empty-task-notice" class="text-2xl text-slate-700 font-bold text-center my-20"> Kamu belum punya todo list, yukk mulai buat!</p>`
+		)
+	}
 };
 </script>
 <script>
@@ -125,7 +128,8 @@ $(document).ready(fetchData)
 <script>
  $("#submit-button").click(function(e){
 		e.preventDefault();
-		var formData = $('#form-create').serializeArray();	
+		let current = $('#form-create')
+		var formData = current.serializeArray();	
 		var url = e.currentTarget.action;
 		
 		const cleanData = {
@@ -142,7 +146,9 @@ $(document).ready(fetchData)
 		success: data => {
 			
 			window.alert("berhasil menambahkan task!");
+			formData[2].value = "";	
 			$("#close-create-task-modal").click();
+			$("#empty-task-notice").remove();
 			appendCard(data[0]);
 			
 		},
@@ -168,9 +174,21 @@ function deleteTask(id){
 	setTimeout(function(){
 		$(`#toggle-delete-modal-${id}`).click();
 		$(`#task-${id}`).remove();
+		fetchData();
 	}, 1000)
 	
 }
+
+</script>
+<script>
+
+function resetForm(){
+	let current = $("#form-create");
+	current["0"]["1"].value = "";
+	current["0"]["2"].value = "";
+	
+}
+
 
 </script>
 
